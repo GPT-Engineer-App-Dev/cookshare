@@ -10,7 +10,7 @@ const Index = () => {
         <HStack spacing={8}>
           <Link href="/">Home</Link>
           <Link href="/recipes">Recipes</Link>
-          <Link href="/submit">Submit a Recipe</Link>
+          <Button colorScheme="teal" size="lg" as={Link} href="/submit">Submit a Recipe</Button>
           <Link href="/contact">Contact</Link>
         </HStack>
       </Flex>
@@ -19,7 +19,7 @@ const Index = () => {
       <Box bg="gray.100" py={20} textAlign="center">
         <Heading as="h2" size="2xl" mb={4}>Welcome to RecipeShare</Heading>
         <Text fontSize="xl" mb={6}>Discover and share amazing recipes from around the world.</Text>
-        <Button colorScheme="teal" size="lg">Submit a Recipe</Button>
+        <Button colorScheme="teal" size="lg" as={Link} href="/submit">Submit a Recipe</Button>
       </Box>
 
       {/* Featured Recipes Section */}
