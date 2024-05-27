@@ -1,7 +1,44 @@
-import { Box, Button, Container, Flex, Heading, HStack, Image, Link, SimpleGrid, Text, VStack } from "@chakra-ui/react";
-import { FaFacebook, FaTwitter, FaInstagram } from "react-icons/fa";
+import { Box, Button, Container, Flex, Heading, HStack, Image, Link, SimpleGrid, Text, VStack, IconButton } from "@chakra-ui/react";
+import { FaFacebook, FaTwitter, FaInstagram, FaStar } from "react-icons/fa";
+import { useState } from "react";
+
+const Rating = ({ rating, setRating }) => {
+  const [hover, setHover] = useState(null);
+
+  return (
+    <HStack spacing={1}>
+      {[...Array(5)].map((_, index) => {
+        const ratingValue = index + 1;
+        return (
+          <IconButton
+            key={index}
+            icon={<FaStar />}
+            color={ratingValue <= (hover || rating) ? "teal.500" : "gray.300"}
+            onClick={() => setRating(ratingValue)}
+            onMouseEnter={() => setHover(ratingValue)}
+            onMouseLeave={() => setHover(null)}
+            variant="ghost"
+            size="lg"
+          />
+        );
+      })}
+    </HStack>
+  );
+};
 
 const Index = () => {
+  const [ratings, setRatings] = useState({
+    recipe1: 0,
+    recipe2: 0,
+    recipe3: 0,
+  });
+
+  const handleRatingChange = (recipe, rating) => {
+    setRatings((prevRatings) => ({
+      ...prevRatings,
+      [recipe]: rating,
+    }));
+  };
   return (
     <Box>
       {/* Navigation Bar */}
@@ -31,6 +68,7 @@ const Index = () => {
             <Box p={6}>
               <Heading as="h4" size="md" mb={2}>Delicious Pasta</Heading>
               <Text>Try this amazing pasta recipe with a rich and creamy sauce.</Text>
+              <Rating rating={ratings.recipe1} setRating={(rating) => handleRatingChange('recipe1', rating)} />
             </Box>
           </Box>
           <Box borderWidth="1px" borderRadius="lg" overflow="hidden">
@@ -38,6 +76,7 @@ const Index = () => {
             <Box p={6}>
               <Heading as="h4" size="md" mb={2}>Tasty Tacos</Heading>
               <Text>Enjoy these flavorful tacos with fresh ingredients.</Text>
+              <Rating rating={ratings.recipe2} setRating={(rating) => handleRatingChange('recipe2', rating)} />
             </Box>
           </Box>
           <Box borderWidth="1px" borderRadius="lg" overflow="hidden">
@@ -45,6 +84,7 @@ const Index = () => {
             <Box p={6}>
               <Heading as="h4" size="md" mb={2}>Hearty Salad</Heading>
               <Text>A healthy and delicious salad packed with nutrients.</Text>
+              <Rating rating={ratings.recipe3} setRating={(rating) => handleRatingChange('recipe3', rating)} />
             </Box>
           </Box>
         </SimpleGrid>
